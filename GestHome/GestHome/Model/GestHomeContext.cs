@@ -12,8 +12,8 @@ namespace GestHome.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=35.197.203.240;Database=GestHome;Persist Security Info=False;User ID=sa;Password=lorem#Ips;MultipleActiveResultSets=False;Connection Timeout=30;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer(@"Server=35.189.91.222;Initial Catalog=GestHome;Persist Security Info=False;User ID=sa;Password=lorem#Ips;MultipleActiveResultSets=False;");
             }
         }
 
@@ -36,6 +36,8 @@ namespace GestHome.Model
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Token).HasMaxLength(300);
 
                 entity.Property(e => e.Usuario)
                     .IsRequired()

@@ -8,14 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using GestHome.Model;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Swashbuckle.AspNetCore.Swagger;
 using GestHome.Settings;
-using Microsoft.Extensions.PlatformAbstractions;
-using System.IO;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using GestHome.Model;
 
 namespace GestHome
 {
@@ -31,6 +29,7 @@ namespace GestHome
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             //Inyectamos el contexto Entity Framework Core
             services.AddDbContext<GestHomeContext>(c =>
             {
@@ -66,28 +65,11 @@ namespace GestHome
 
             services.AddMvc();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                builder =>
-                {
-                    builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader()
-                   .WithMethods("POST", "GET", "DELETE", "PUT", "OPTIONS");
-
-                });
-            });
-
             //Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "OrangeScrum API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Introduce el Token", Name = "Authorization", Type = "apiKey" });
-
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "GestHome.xml");
-                c.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -105,12 +87,10 @@ namespace GestHome
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GestHome API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
             });
 
             app.UseAuthentication();
-
-            app.UseCors("CorsPolicy");
 
             app.UseMvc();
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GestHome.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestHome.Controllers
 {
@@ -22,6 +23,7 @@ namespace GestHome.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
+        [Authorize]
         public IEnumerable<Usuarios> GetUsuarios()
         {
             return _context.Usuarios;
@@ -48,6 +50,7 @@ namespace GestHome.Controllers
 
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutUsuarios([FromRoute] int id, [FromBody] Usuarios usuarios)
         {
             if (!ModelState.IsValid)
@@ -83,6 +86,7 @@ namespace GestHome.Controllers
 
         // POST: api/Usuarios
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostUsuarios([FromBody] Usuarios usuarios)
         {
             if (!ModelState.IsValid)
@@ -98,6 +102,7 @@ namespace GestHome.Controllers
 
         // DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteUsuarios([FromRoute] int id)
         {
             if (!ModelState.IsValid)
